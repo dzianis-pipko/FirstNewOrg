@@ -1,0 +1,41 @@
+<apex:page controller="ProductListController" lightningStylesheets="true">
+    <apex:slds />
+    <apex:pageBlock title="Product List">
+        <apex:form>
+        <apex:pageBlockTable var="a" value="{!NewProductList}">
+            <apex:column headerValue="IMAGE" style="width:10%">
+                <apex:image value="{!a.Image_Url__c}" height="100" width="100" />
+            </apex:column>
+            <apex:column headerValue="" style="width:10%">
+                <apex:commandLink action="{!DetailOpisPage}">
+                    <apex:param name="recordId" value="{!a.Id}" assignTo="{!newId}" />
+
+                    {!a.Name}
+                </apex:commandLink>
+            </apex:column>
+            <apex:column headerValue="TITLE" style="width:20%">
+                <apex:outputText value="{!a.Title__c}">
+                </apex:outputText>
+            </apex:column>
+            <apex:column headerValue="DESCRIPTION" style="width:30%">
+                <apex:outputText value="{!IF(LEN(a.Product_Description__c)>100,
+                                        LEFT(a.Product_Description__c,100)+'...',
+                                        a.Product_Description__c)}">
+                </apex:outputText>
+
+                <apex:commandLink action="{!DetailOpisPage}" value="More" rendered="{!LEN(a.Product_Description__c)>100}">
+                </apex:commandLink>
+            </apex:column>
+            <apex:column headerValue="COST" style="width:20%">
+                <apex:outputText value="{!a.Unit_Prise__c} $">
+                </apex:outputText>
+            </apex:column>
+            <apex:column headerValue="" style="width:10%">
+                <apex:commandLink action="{!DetailOpisPage}" value="Buy" styleClass="slds-button slds-button_brand">
+                    <apex:param name="recordId" value="{!a.Id}" assignTo="{!newId}" />
+                </apex:commandLink>
+            </apex:column>
+        </apex:pageBlockTable>
+        </apex:form>
+    </apex:pageBlock>
+</apex:page>
